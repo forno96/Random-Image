@@ -8,14 +8,8 @@ function start(){
 }
 
 function addInfo(){
-    $("#info").hide();
-    $.getJSON("./database.json", function(data){
-        $("#box").prepend(`
-            <h5>${data.info[img].author},</h5>
-            <p>${data.info[img].name}</p>
-        `);
-    });
-    $("#voteup, #votedown").show();
+    $("#info-button").hide();
+    $("#info-box").show();
 }
 
 function vote(get){
@@ -25,9 +19,11 @@ function vote(get){
 }
 
 function getRange(){
-     to = $("#to").val() ? $("#to").val()-1 : 0
-     from = $("#from").val() ? $("#from").val()-1 : 196
-     if(to>from) to=from-1;
+    to = $("#to").val()-1;
+    from = $("#from").val()-1;
+    to = (to && to>0 && to<196) ? to: 0 //controllo correttezza imput
+    from = (from && from>0 && from<196) ? from : 196 //controllo correttezza imput
+    if(to>from) {to=to+from; from=to-from; to=to-from;} //swap
 }
 
 function getImage(){
@@ -36,8 +32,7 @@ function getImage(){
         if (from-to+1 != imgLenght){
             do{
                 rnd = Math.floor(Math.random() * (from-to+1))+to;
-                console.log(rnd);
-            } while (imgSel[rnd]!=null);
+            } while (imgSel[rnd]!=null);//controllo per non pescare la setessa immagine 2 volte
             imgSel[rnd]=1;
             imgLenght+=1;
             img=rnd;
@@ -47,14 +42,17 @@ function getImage(){
                     <div class="container text-center">
                         <img class="img-fluid" style="max-height: 450px" src="./foto/${data.info[img].url}" alt="Card image cap">
                     </div>
-                    <div class="container" id="box">
-                        <button type="button" class="btn" id="info" onclick="addInfo()">Mostra info</button>
-
-                        <button type="button" class="btn is-primary" id="voteup" onclick="vote(1)">Indovinata</button>
-                        <button type="button" class="btn is-error" id="votedown" onclick="vote(0)">Non Indovinata</button>
+                    <div class="container">
+                        <div id="info-box">
+                            <h5>${data.info[img].author},</h5>
+                            <p>${data.info[img].name}</p>
+                            <button type="button" class="btn is-primary" id="voteup" onclick="vote(1)">Indovinata</button>
+                            <button type="button" class="btn is-error" id="votedown" onclick="vote(0)">Non Indovinata</button>
+                        </div>
+                        <button type="button" class="btn" id="info-button" onclick="addInfo()">Mostra info</button>
                     </div>
                     <button type="button" class="btn is-success" onclick="start()">Cambia Range</button>
-                    <div class="field is-inline">
+                    <div class="field is-inline mt-1">
                         <label for="to" class="m-1">Da</label>
                         <input class="input" style="max-width: 94px" id="to" type="number" min="1" max="${data.info.length}" value="${to+1}">
                         <label for="from" style="max-width: 18px" class="m-1">a</label>
@@ -63,7 +61,7 @@ function getImage(){
                 </div>
                 `
             );
-            $("#voteup, #votedown").hide();
+            $("#info-box").hide();
         }
         else {
             $("body").html(`
