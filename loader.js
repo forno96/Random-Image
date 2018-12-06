@@ -1,14 +1,14 @@
-var img, andamento, totale, imgLenght;
 var imgSel = [];
 
 function start(){
     andamento=0; totale=0; imgLenght=0;
     while (imgSel.length != 0) imgSel.pop();
+    getRange();
     getImage();
 }
 
 function addInfo(){
-    $("#info, #change").hide();
+    $("#info").hide();
     $.getJSON("./database.json", function(data){
         $("#box").prepend(`
             <h5>${data.info[img].author},</h5>
@@ -24,12 +24,20 @@ function vote(get){
     getImage();
 }
 
+function getRange(){
+     to = $("#to").val() ? $("#to").val()-1 : 0
+     from = $("#from").val() ? $("#from").val()-1 : 196
+     if(to>from) to=from-1;
+}
+
 function getImage(){
     $.getJSON("./database.json", function(data){
         var rnd;
-        if (data.info.length != imgLenght){
-            do{ rnd = Math.floor(Math.random() * data.info.length);
-            } while (imgSel[rnd]!=null)
+        if (from-to+1 != imgLenght){
+            do{
+                rnd = Math.floor(Math.random() * (from-to+1))+to;
+                console.log(rnd);
+            } while (imgSel[rnd]!=null);
             imgSel[rnd]=1;
             imgLenght+=1;
             img=rnd;
@@ -45,7 +53,13 @@ function getImage(){
                         <button type="button" class="btn is-primary" id="voteup" onclick="vote(1)">Indovinata</button>
                         <button type="button" class="btn is-error" id="votedown" onclick="vote(0)">Non Indovinata</button>
                     </div>
-                    <button type="button" class="btn is-success" id="change" onclick="vote(0)">Cambia Immagine</button>
+                    <button type="button" class="btn is-success" onclick="start()">Cambia Range</button>
+                    <div class="field is-inline">
+                        <label for="to" class="m-1">Da</label>
+                        <input class="input" style="max-width: 94px" id="to" type="number" min="1" max="${data.info.length}" value="${to+1}">
+                        <label for="from" style="max-width: 18px" class="m-1">a</label>
+                        <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${data.info.length}" value="${from+1}">
+                    </div>
                 </div>
                 `
             );
@@ -53,10 +67,19 @@ function getImage(){
         }
         else {
             $("body").html(`
-                <div class="container container-fluid mt-3">
+                <div class="container container-fluid mt-3 text-center">
                     <h2> Hai visto tutte le immagini! </h2>
                     <h3> Con ${andamento} su ${totale} immagini azzeccate! </h3>
-                    <button type="button" class="btn is-success" onclick="start()">Reinizia da capo</button>
+
+                    <button type="button" class="btn" onclick="start()">Reinizia da capo</button>
+                    <button type="button" class="btn is-success" onclick="start()">Cambia Range</button>
+                    <div class="field is-inline">
+                        <label for="to" class="m-1">Da</label>
+                        <input class="input" style="max-width: 94px" id="to" type="number" min="1" max="${data.info.length}" value="${to+1}">
+                        <label for="from" style="max-width: 18px" class="m-1">a</label>
+                        <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${data.info.length}" value="${from+1}">
+                    </div>
+
                 </div>`);
         }
     });
