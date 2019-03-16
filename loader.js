@@ -66,6 +66,10 @@ function getImage() {
           <label for="from" style="max-width: 18px" class="m-1">a</label>
           <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
         </div>
+        <br/>
+        <p class="text-right text-secondary">
+          Created by <a href="https://github.com/forno96">@forno96</a>
+        </p>
       </div>`);
     $("#info-box").hide();
   }
@@ -83,6 +87,10 @@ function getImage() {
           <label for="from" style="max-width: 18px" class="m-1">a</label>
           <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
         </div>
+        <br/>
+        <p class="text-right text-secondary">
+          Created by <a href="https://github.com/forno96">@forno96</a>
+        </p>
       </div>`);
   }
 }
