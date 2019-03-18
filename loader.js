@@ -45,26 +45,25 @@ function getImage() {
   if (db.length > 0) {
     elem = db.splice(Math.floor(Math.random() * db.length),1)[0];
     $("body").html(`
-      <div class="container with-title container-fluid mt-3">
+      <div class="nes-container is-rounded with-title m-3">
         <h2 class="title">${progress}/${total} foto indovinate</h2>
-        <div class="container text-center">
+        <div class="nes-container text-center">
           <img class="img-fluid" style="max-height: 450px" src="./foto/${elem.url}" alt="Card image cap">
         </div>
-        <div class="container">
+        <div class="nes-container mt-2">
           <div id="info-box">
             <h5>${elem.author},</h5>
             <p>${elem.name}</p>
-            <button type="button" class="btn is-primary" id="voteup" onclick="vote(1)">Indovinata</button>
-            <button type="button" class="btn is-error" id="votedown" onclick="vote(0)">Non Indovinata</button>
+            <button type="button" class="nes-btn is-success" id="voteup" onclick="vote(1)">Indovinata</button>
+            <button type="button" class="nes-btn is-error" id="votedown" onclick="vote(0)">Non Indovinata</button>
           </div>
-          <button type="button" class="btn" id="info-button" onclick="addInfo()">Mostra info</button>
+          <button type="button" class="nes-btn" id="info-button" onclick="addInfo()">Mostra info</button>
         </div>
-        <button type="button" class="btn is-success" onclick="start()">Cambia Range</button>
-        <div class="field is-inline mt-1">
+        <div class="nes-field is-inline mt-3">
+          <button type="button" class="nes-btn is-primary" onclick="start()">Cambia Range</button>
           <label for="to" class="m-1">Da</label>
-          <input class="input" style="max-width: 94px" id="to" type="number" min="1" max="${dbCap}" value="${to+1}">
-          <label for="from" style="max-width: 18px" class="m-1">a</label>
-          <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
+          <input class="nes-input" style="max-width: 94px" id="to" type="number" min="1" max="${dbCap}" value="${to+1}">
+          <label for="from" style="max-width: 18px" class="m-1">a</label>            <input class="nes-input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
         </div>
         <br/>
         <p class="text-right text-secondary">
@@ -75,17 +74,17 @@ function getImage() {
   }
   else {
     $("body").html(`
-      <div class="container container-fluid mt-3 text-center">
+      <div class="nes-container is-rounded text-center m-3">
         <h2> Hai visto tutte le immagini! </h2>
         <h3> Con ${progress} su ${total} immagini azzeccate! </h3>
 
-        <button type="button" class="btn" onclick="start()">Reinizia da capo</button>
-        <button type="button" class="btn is-success" onclick="start()">Cambia Range</button>
-        <div class="field is-inline">
+        <button type="button" class="nes-btn" onclick="start()">Reinizia da capo</button>
+        <button type="button" class="nes-btn is-primary" onclick="start()">Cambia Range</button>
+        <div class="nes-field is-inline mt-3">
           <label for="to" class="m-1">Da</label>
-          <input class="input" style="max-width: 94px" id="to" type="number" min="1" max="${dbCap}" value="${to+1}">
+          <input class="nes-input" style="max-width: 94px" id="to" type="number" min="1" max="${dbCap}" value="${to+1}">
           <label for="from" style="max-width: 18px" class="m-1">a</label>
-          <input class="input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
+          <input class="nes-input" style="max-width: 94px" id="from" type="number" min="1" max="${dbCap}" value="${from+1}">
         </div>
         <br/>
         <p class="text-right text-secondary">
